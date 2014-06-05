@@ -2,6 +2,8 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Window 2.0
 
+//import "Nodes"
+
 ApplicationWindow {
     title: qsTr("Hello World")
     width: 640
@@ -45,23 +47,19 @@ ApplicationWindow {
 
                         DiaItem {
                             anchors.verticalCenter: parent.verticalCenter
-                            componentFile: "DiaTest1.qml"
-                            color: "blue"
+                            componentFile: "Nodes/Flow/InOutput.qml"
                         }
                         DiaItem {
                             anchors.verticalCenter: parent.verticalCenter
-                            color: "red"
-                            componentFile: "DiaTest2.qml"
+                            componentFile: "Nodes/Flow/PredefinedProcess.qml"
                         }
                         DiaItem {
                             anchors.verticalCenter: parent.verticalCenter
-                            color: "black"
-                            componentFile: "DiaTest3.qml"
+                            componentFile: "Nodes/Flow/Connector.qml"
                         }
                         DiaItem {
                             anchors.verticalCenter: parent.verticalCenter
-                            color: "yellow"
-                            componentFile: "DiaTest4.qml"
+                            componentFile: "Nodes/Flow/Process.qml"
                         }
                     }
                 }

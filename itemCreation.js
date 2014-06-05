@@ -5,10 +5,8 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    console.log("start Drag");
     posnInWindow = paletteItem.mapToItem(window, 0, 0);
     startingMouse = { x: mouse.x, y: mouse.y }
-    console.log("load component");
     loadComponent();
 }
 
@@ -31,7 +29,13 @@ function loadComponent() {
 function createItem() {
     console.log("create item");
     if (itemComponent.status == Component.Ready && draggedItem == null) {
-        draggedItem = itemComponent.createObject(window, {"x": posnInWindow.x, "y": posnInWindow.y, "z": 20});
+        draggedItem = itemComponent.createObject(window, {"x": posnInWindow.x,
+                                                          "y": posnInWindow.y,
+                                                          "z": 20
+        });
+        draggedItem.width = draggedItem.minimumWidth;
+        draggedItem.height = draggedItem.minimumHeight;
+        draggedItem.dynamic = true;
         // make sure created item is above the ground layer
     } else if (itemComponent.status == Component.Error) {
         draggedItem = null;
@@ -42,7 +46,6 @@ function createItem() {
 
 function continueDrag(mouse)
 {
-    console.log("continueDrag");
     if (draggedItem == null)
         return;
 
@@ -52,7 +55,6 @@ function continueDrag(mouse)
 
 function endDrag(mouse)
 {
-    console.log("endDrag");
     if (draggedItem == null)
         return;
 

@@ -1,18 +1,23 @@
 import QtQuick 2.2
 import "itemCreation.js" as Code
 
-Rectangle {
+Item {
     id: paletteItem
-    width: 20
-    height: 20
+    width: 40
+    height: 40
 
     property string componentFile
+
+    Loader {
+        id: loader
+        source: componentFile
+    }
+
 
     MouseArea {
         anchors.fill: parent
 
         onPressed: {
-            console.log("on pressed")
             Code.startDrag(mouse);
         }
         onPositionChanged: Code.continueDrag(mouse);
