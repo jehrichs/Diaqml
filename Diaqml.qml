@@ -2,12 +2,15 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Window 2.0
 
-//import "Nodes"
+import "Nodes/node_handling.js" as Node
 
 ApplicationWindow {
+    id: application
     title: qsTr("Hello World")
     width: 640
     height: 480
+
+    property bool linkModeEnabled: false
 
     menuBar: MenuBar {
         Menu {
@@ -17,6 +20,13 @@ ApplicationWindow {
                 onTriggered: Qt.quit();
             }
         }
+    }
+
+    MouseArea {
+        id: documentArea
+        anchors.fill: parent
+
+        onClicked: { Node.select(null) }
     }
 
     Rectangle {

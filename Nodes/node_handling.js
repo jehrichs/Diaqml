@@ -1,21 +1,23 @@
 .pragma library
 
-var lastNode = null;
+var lastSelectedNode = null;
+var curLink = null;
 
 function select(node) {
-    if(node == lastNode) {
+    if(node == lastSelectedNode) {
         return;
     }
     
-    if(lastNode) {
-        lastNode.selected=false;
-        lastNode.state = "hoverOff"
-        lastNode = null;
+    if(lastSelectedNode) {
+        lastSelectedNode.selected=false;
+        lastSelectedNode.state = "hoverOff"
+        lastSelectedNode = null;
     }
 
     if(node) {
         node.selected = true;
     }
 
-    lastNode = node
+    lastSelectedNode = node
 }
+

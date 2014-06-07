@@ -9,6 +9,8 @@ Item {
     height: 40
     transformOrigin: Item.Center
 
+    property int hoverFrameEnabled: handle.opacity
+
     property bool dynamic: false
     property real minimumWidth: 100
     property real minimumHeight: 100
@@ -28,12 +30,10 @@ Item {
 
     property real nalpha: 1
 
-    //property int minimumWidth: 80
-    //property int minimumHeight: 40
-
     property int gap: 5
 
     SizeMoveHandle {
         id: handle
+        z: 5
     }
 }

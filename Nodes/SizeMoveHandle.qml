@@ -16,22 +16,15 @@ Rectangle {
     property int maxHandleSize: 10
     property bool selected: false
 
+
     states: [
         State {
             name: "hoverOn"
-
-            PropertyChanges {
-                target: sizeMoveHandle
-                opacity: 1
-            }
+            PropertyChanges { target: sizeMoveHandle; opacity: 1; }
         },
         State {
             name: "hoverOff"
-
-            PropertyChanges {
-                target: sizeMoveHandle
-                opacity: 0
-            }
+            PropertyChanges { target: sizeMoveHandle; opacity: 0;  }
         }
     ]
 

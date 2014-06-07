@@ -8,6 +8,36 @@ NodeFrame {
     property real minimumWidth: 100
     property real minimumHeight: 100
 
+    LinkSocket {
+        id: top
+        z: 10
+        x: parent.width/2-top.width/2
+    }
+    LinkSocket {
+        id: bottom
+        z: 10
+        x: parent.width/2-bottom.width/2
+        y: parent.height-bottom.height
+    }
+
+    LinkSocket {
+        id: left
+        z: 10
+        y: parent.height/2-left.height/2
+    }
+    LinkSocket {
+        id: right
+        z: 10
+        x: parent.width-right.width
+        y: parent.height/2-right.height/2
+    }
+    LinkSocket {
+        id: center
+        z: 10
+        x: parent.width/2-right.width/2
+        y: parent.height/2-right.height/2
+    }
+
     Rectangle {
         x: parent.gap
         y: parent.gap
