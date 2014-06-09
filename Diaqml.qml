@@ -1,16 +1,19 @@
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.2
+import QtQuick.Layouts 1.0
 import QtQuick.Window 2.0
 
+
+import "Menu"
 import "Nodes/node_handling.js" as Node
 
 ApplicationWindow {
     id: application
-    title: qsTr("Hello World")
+    title: qsTr("Diaqml - Diagram Editor in QML")
     width: 640
     height: 480
 
-    property bool linkModeEnabled: false
+    property int itemShapeGridSize: 40
 
     menuBar: MenuBar {
         Menu {
@@ -23,57 +26,63 @@ ApplicationWindow {
     }
 
     MouseArea {
-        id: documentArea
         anchors.fill: parent
 
         onClicked: { Node.select(null) }
     }
 
-    Rectangle {
+
+
+    SplitView {
         id: window
         anchors.fill: parent
+        orientation: Qt.Horizontal
 
-        // top panel
-        Rectangle {
-            id: toolbox
-            color: "white"
-            height: 80
-            anchors { right: parent.right; top: parent.top; left: parent.left}
+        Flipable {
+            id: flipable
+            //width: 240
+            //height: 240
+            Layout.minimumWidth: 200
+            Layout.maximumWidth: 400
 
-            Column {
-                anchors.centerIn: parent
-                spacing: 8
+            property bool flipped: false
 
-                Text { text: "Drag an item into the scene." }
+            front: ItemShapes {
+                id: testdocument
+                anchors.fill:parent
 
-                Rectangle {
-                    width: palette.width + 50; height: palette.height + 20
-                    border.color: "black"
-
-                    Row {
-                        id: palette
-                        anchors.centerIn: parent
-                        spacing: 8
-
-                        DiaItem {
-                            anchors.verticalCenter: parent.verticalCenter
-                            componentFile: "Nodes/Flow/InOutput.qml"
-                        }
-                        DiaItem {
-                            anchors.verticalCenter: parent.verticalCenter
-                            componentFile: "Nodes/Flow/PredefinedProcess.qml"
-                        }
-                        DiaItem {
-                            anchors.verticalCenter: parent.verticalCenter
-                            componentFile: "Nodes/Flow/Connector.qml"
-                        }
-                        DiaItem {
-                            anchors.verticalCenter: parent.verticalCenter
-                            componentFile: "Nodes/Flow/Process.qml"
-                        }
-                    }
-                }
+                documentArea: documentArea
             }
+            back: Rectangle { anchors.fill:parent
+                color: "green" }
+
+            transform: Rotation {
+                id: rotation
+                origin.x: flipable.width/2
+                origin.y: flipable.height/2
+                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
+                angle: 0    // the default angle
+            }
+
+            states: State {
+                name: "back"
+                PropertyChanges { target: rotation; angle: 180 }
+                when: flipable.flipped
+            }
+
+            transitions: Transition {
+                NumberAnimation { target: rotation; property: "angle"; duration: 440 }
+            }
+
+            Component.onCompleted: Node.setFlipable(flipable);
+        }
+
+
+        Rectangle {
+            id: documentArea
+            Layout.minimumWidth: 50
+            Layout.fillWidth: true
+            color: "darkgray"
         }
     }
 }

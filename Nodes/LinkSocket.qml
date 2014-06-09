@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 
 import "node_handling.js" as Node
 
@@ -20,8 +20,15 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
 
-        onEntered: { parent.mouseOver=true; parent.color = "red"; parent.width=10;parent.height=10; }
+        onEntered: { if(socket.parent.dynamic) {
+                        parent.mouseOver=true;
+                        parent.color = "red";
+                        parent.width=10;
+                        parent.height=10;
+                    }
+        }
         onExited: { parent.mouseOver=false; parent.color = "black"; parent.width=5;parent.height=5;}
+
         onClicked: {
             if(Node.curLink) { console.log("current link exist") }
             else {console.log("current link does not exist")}

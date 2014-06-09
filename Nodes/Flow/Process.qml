@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 
 import "../"
 
@@ -34,8 +34,8 @@ NodeFrame {
     LinkSocket {
         id: center
         z: 10
-        x: parent.width/2-right.width/2
-        y: parent.height/2-right.height/2
+        x: parent.width/2-center.width/2
+        y: parent.height/2-center.height/2
     }
 
     Rectangle {

@@ -2,6 +2,11 @@
 
 var lastSelectedNode = null;
 var curLink = null;
+var flipable = null;
+
+function setFlipable(item) {
+    flipable = item;
+}
 
 function select(node) {
     if(node == lastSelectedNode) {
@@ -19,5 +24,12 @@ function select(node) {
     }
 
     lastSelectedNode = node
+
+    if(lastSelectedNode) {
+        flipable.flipped = true
+    }
+    else {
+        flipable.flipped = false
+    }
 }
 

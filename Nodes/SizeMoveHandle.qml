@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 
 import "node_handling.js" as Node
 
@@ -32,7 +32,6 @@ Rectangle {
         id: moveHandle
         cursorShape: Qt.DragMoveCursor;
         anchors.fill: parent
-        //acceptedButtons: Qt.LeftButton | Qt.RightButton
         hoverEnabled: true
 
         onEntered: { if(sizeMoveHandle.parent.dynamic) { sizeMoveHandle.state = "hoverOn" }}

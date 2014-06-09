@@ -5,7 +5,7 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = paletteItem.mapToItem(window, 0, 0);
+    posnInWindow = shapePresetItem.mapToItem(window, 0, 0);
     startingMouse = { x: mouse.x, y: mouse.y }
     loadComponent();
 }
@@ -19,7 +19,7 @@ function loadComponent() {
         return;
     }
 
-    itemComponent = Qt.createComponent(paletteItem.componentFile);
+    itemComponent = Qt.createComponent(shapePresetItem.componentFile);
     if (itemComponent.status == Component.Loading)  //Depending on the content, it can be ready or error immediately
         component.statusChanged.connect(createItem);
     else
@@ -27,7 +27,6 @@ function loadComponent() {
 }
 
 function createItem() {
-    console.log("create item");
     if (itemComponent.status == Component.Ready && draggedItem == null) {
         draggedItem = itemComponent.createObject(window, {"x": posnInWindow.x,
                                                           "y": posnInWindow.y,
@@ -58,12 +57,10 @@ function endDrag(mouse)
     if (draggedItem == null)
         return;
 
-//    if (draggedItem.y < toolbox.height) { //Don't drop it in the toolbox
-//        draggedItem.destroy();
-//        draggedItem = null;
-//    } else {
-//        draggedItem.created = true;
-//        draggedItem = null;
-//    }
-            draggedItem = null;
+    //Don't drop it in the toolbox
+    if (draggedItem.x < shapePresetItem.documentArea.x) {
+       draggedItem.destroy();
+   }
+
+   draggedItem = null;
 }
