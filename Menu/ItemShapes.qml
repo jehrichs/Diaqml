@@ -74,7 +74,7 @@ Rectangle {
     }
 
     ScrollView {
-        width: parent.width+50 //+50 dut t oa bug that shows a horizontal slider where no should be
+        width: parent.width+50 //+50 due to a bug that shows a horizontal slider where no should be
         height: parent.height
 
     Column {

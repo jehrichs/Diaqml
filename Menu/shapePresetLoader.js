@@ -30,7 +30,7 @@ function createItem() {
     if (itemComponent.status == Component.Ready && draggedItem == null) {
         draggedItem = itemComponent.createObject(window, {"x": posnInWindow.x,
                                                           "y": posnInWindow.y,
-                                                          "z": 20
+                                                          "z": 1
         });
         draggedItem.width = draggedItem.minimumWidth;
         draggedItem.height = draggedItem.minimumHeight;

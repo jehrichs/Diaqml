@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import "shapePresetLoader.js" as SPL
 
+
 Item {
     id: shapePresetItem
     width: itemShapeGridSize

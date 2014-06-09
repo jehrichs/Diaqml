@@ -10,8 +10,8 @@ import "Nodes/node_handling.js" as Node
 ApplicationWindow {
     id: application
     title: qsTr("Diaqml - Diagram Editor in QML")
-    width: 640
-    height: 480
+    width: 800
+    height: 600
 
     property int itemShapeGridSize: 40
 
@@ -19,16 +19,14 @@ ApplicationWindow {
         Menu {
             title: qsTr("File")
             MenuItem {
+                text: qsTr("Flip")
+                onTriggered: Node.flipable.flipped = !Node.flipable.flipped;
+            }
+            MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
             }
         }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-
-        onClicked: { Node.select(null) }
     }
 
 
@@ -40,21 +38,18 @@ ApplicationWindow {
 
         Flipable {
             id: flipable
-            //width: 240
-            //height: 240
             Layout.minimumWidth: 200
             Layout.maximumWidth: 400
 
             property bool flipped: false
 
             front: ItemShapes {
-                id: testdocument
-                anchors.fill:parent
+                                id: testdocument
+                                anchors.fill:parent
 
-                documentArea: documentArea
-            }
-            back: Rectangle { anchors.fill:parent
-                color: "green" }
+                                documentArea: documentArea
+                                }
+            back: ItemPropertiesMenu { anchors.fill:parent }
 
             transform: Rotation {
                 id: rotation
@@ -67,6 +62,8 @@ ApplicationWindow {
             states: State {
                 name: "back"
                 PropertyChanges { target: rotation; angle: 180 }
+                PropertyChanges { target: flipable.front; enabled: false }
+                PropertyChanges { target: flipable.back; enabled: true }
                 when: flipable.flipped
             }
 
@@ -83,6 +80,13 @@ ApplicationWindow {
             Layout.minimumWidth: 50
             Layout.fillWidth: true
             color: "darkgray"
+
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: { Node.select(null) }
+            }
         }
     }
 }

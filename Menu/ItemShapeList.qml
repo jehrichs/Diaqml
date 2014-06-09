@@ -41,7 +41,7 @@ Rectangle {
         }
         MouseArea{
             width: parent.width
-            height:  parent.height
+            height: parent.height
             onClicked: {
                 if (shapeList.state == "collapsed") {
                     shapeList.state = ""

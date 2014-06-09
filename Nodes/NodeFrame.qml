@@ -15,17 +15,17 @@ Item {
     property real minimumWidth: 100
     property real minimumHeight: 100
 
-    property color nbgColor: "red"
+    property color nbgColor: Node.lastSelectedBgColor
     property color nfgColor: "blue"
     property bool nfill: true
 
-    property color nborderColor: "black"
+    property color nborderColor: Node.lastSelectedBorderColor
     property bool nborder: true
     property int nborderWidth: 2
 
-    property color ntextColor: "black"
+    property color ntextColor: Node.lastSelectedTextColor
     property string ntext: ""
-    property real npointSize: 16
+    property real npointSize: 10
     property string nfamily: "Helvetica"
 
     property real nalpha: 1
@@ -36,4 +36,11 @@ Item {
         id: handle
         z: 5
     }
+
+    onXChanged: {Node.updatePropertiesMenu()}
+    onYChanged: {Node.updatePropertiesMenu()}
+    onWidthChanged: {Node.updatePropertiesMenu()}
+    onHeightChanged: {Node.updatePropertiesMenu()}
+
+    Component.onCompleted: { frame.npointSize = Node.lastSelectedTextSize }
 }
