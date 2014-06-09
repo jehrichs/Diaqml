@@ -29,6 +29,14 @@ Rectangle {
             componentFile: "../Nodes/Flow/Process.qml"
             documentArea: listOfAvailableShapes.documentArea
         }
+        ShapePreset {
+            componentFile: "../Nodes/Flow/OffPageConnector.qml"
+            documentArea: listOfAvailableShapes.documentArea
+        }
+        ShapePreset {
+            componentFile: "../Nodes/Flow/Decision.qml"
+            documentArea: listOfAvailableShapes.documentArea
+        }
     }
 
     ObjectModel {

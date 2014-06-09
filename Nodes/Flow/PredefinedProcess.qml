@@ -23,7 +23,7 @@ NodeFrame {
                 width: bodyContainer.width*0.1
                 height: bodyContainer.height
 
-                color: inout.nbgColor
+                color: inout.nfill ? inout.nbgColor : "transparent"
                 border.width: nborder ? inout.nborderWidth : 0
                 border.color: inout.nborderColor
             }
@@ -33,7 +33,7 @@ NodeFrame {
                 width: bodyContainer.width*0.8
                 height: bodyContainer.height
 
-                color: inout.nbgColor
+                color: inout.nfill ? inout.nbgColor : "transparent"
                 border.width: nborder ? inout.nborderWidth : 0
                 border.color: inout.nborderColor
 
@@ -58,7 +58,7 @@ NodeFrame {
                 width: bodyContainer.width*0.1
                 height: bodyContainer.height
 
-                color: inout.nbgColor
+                color: inout.nfill ? inout.nbgColor : "transparent"
                 border.width: nborder ? inout.nborderWidth : 0
                 border.color: inout.nborderColor
             }

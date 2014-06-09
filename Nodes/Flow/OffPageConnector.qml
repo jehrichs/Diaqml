@@ -5,8 +5,8 @@ import "../"
 NodeFrame {
     id: node
 
-    property real minimumWidth: 50
-    property real minimumHeight: 50
+    property real minimumWidth: 100
+    property real minimumHeight: 100
 
     LinkSocket {
         id: top
@@ -37,7 +37,7 @@ NodeFrame {
         x: parent.width/2-center.width/2
         y: parent.height/2-center.height/2
     }
-    
+
     onHeightChanged: {
         canvas.requestPaint();
     }
@@ -66,10 +66,20 @@ NodeFrame {
         antialiasing: true
         renderStrategy: Canvas.Threaded;
 
-        property int gap: node.gap
-        property int radius: node.width > node.height ? (node.height/2)-gap : (node.width/2)-gap
-        property int rectx: node.width/2
-        property int recty: node.height/2
+        property int x0: node.gap
+        property int y0: node.gap
+
+        property int x1: node.width-node.gap
+        property int y1: y0
+
+        property int x2: x1
+        property int y2: node.height*0.7
+
+        property int x3: node.width/2
+        property int y3: node.height-node.gap
+
+        property int x4: gap
+        property int y4: y2
 
         onPaint: {
             var ctx = getContext("2d");
@@ -83,7 +93,11 @@ NodeFrame {
             ctx.globalAlpha = node.nalpha;
 
             ctx.beginPath();
-            ctx.arc(rectx,recty,radius,0,360,true);
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.lineTo(x4, y4);
             ctx.closePath();
 
             if (node.nfill) {
@@ -98,10 +112,10 @@ NodeFrame {
     }
 
     Text {
-        width: node.width > node.height ? node.height-canvas.gap : node.width-canvas.gap
-        height: node.width > node.height ? node.height-canvas.gap : node.width-canvas.gap
-        x: node.width/2 - canvas.radius-canvas.gap
-        y: node.height/2 - canvas.radius-canvas.gap
+        width: node.width-2*node.gap
+        height: node.height*0.7
+        x: node.gap
+        y: node.gap
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
 
