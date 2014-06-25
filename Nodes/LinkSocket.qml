@@ -33,6 +33,20 @@ Rectangle {
     property bool mouseOver: false
     opacity: mouseOver ? 1 : parent.hoverFrameEnabled
 
+    property list<Item> links
+
+    onXChanged: {
+        console.log("x changed: ", links.length)
+        for (var i = 0; i < links.length; i++) {
+            links[i].updateCanvas
+        }
+    }
+    onYChanged: {
+        for (var i = 0; i < links.length; i++) {
+            links[i].updateCanvas
+        }
+    }
+
     MouseArea {
         id: socketArea
         anchors.fill: parent
@@ -47,9 +61,13 @@ Rectangle {
         }
         onExited: { parent.mouseOver=false; parent.color = "black"; parent.width=5;parent.height=5;}
 
-        onClicked: {
-            if(Node.curLink) { console.log("current link exist") }
-            else {console.log("current link does not exist")}
+        onClicked: { Node.drawLink(socket); }
+
+        onPositionChanged: {
+            if(Node.curLink) {
+                var tPos = socket.mapToItem(Node.documentArea, socket.width/2, socket.height/2);
+                Node.curLink.updateCanvas(tPos);
+            }
         }
     }
 }

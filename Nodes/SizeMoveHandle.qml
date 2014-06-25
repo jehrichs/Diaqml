@@ -56,6 +56,14 @@ Rectangle {
         onExited: { if(!selected) { sizeMoveHandle.state = "hoverOff" }}
         onClicked: { if(sizeMoveHandle.parent.dynamic)  { Node.select(sizeMoveHandle) }}
 
+
+        onPositionChanged: {
+            if(Node.curLink) {
+                var tPos = sizeMoveHandle.mapToItem(Node.documentArea, sizeMoveHandle.width/2, sizeMoveHandle.height/2);
+                Node.curLink.updateCanvas(tPos);
+            }
+        }
+
         drag.target: parent.parent
         drag.axis: Drag.XandYAxis
 
@@ -84,8 +92,12 @@ Rectangle {
                     frame.y = frame.y - diff;
                     courserPos = mouseY;
                 }
-            }
 
+                if(Node.curLink) {
+                    var tPos = sizeMoveHandle.mapToItem(Node.documentArea, sizeMoveHandle.width/2, sizeMoveHandle.height/2);
+                    Node.curLink.updateCanvas(tPos);
+                }
+            }
 
             onEntered: { topHandle.opacity = 0.5 }
             onExited: { topHandle.opacity = 0 }
@@ -126,6 +138,11 @@ Rectangle {
                     frame.height = frame.height-diff;
                     courserPos = mouseY;
                 }
+
+                if(Node.curLink) {
+                    var tPos = sizeMoveHandle.mapToItem(Node.documentArea, sizeMoveHandle.width/2, sizeMoveHandle.height/2);
+                    Node.curLink.updateCanvas(tPos);
+                }
             }
 
             Rectangle {
@@ -160,6 +177,11 @@ Rectangle {
 
                     frame.width = frame.width-diff;
                     courserPos = mouseX;
+                }
+
+                if(Node.curLink) {
+                    var tPos = sizeMoveHandle.mapToItem(Node.documentArea, sizeMoveHandle.width/2, sizeMoveHandle.height/2);
+                    Node.curLink.updateCanvas(tPos);
                 }
             }
 
@@ -198,6 +220,11 @@ Rectangle {
                     frame.width = frame.width+diff;
                     frame.x = frame.x - diff;
                     courserPos = mouseX;
+                }
+
+                if(Node.curLink) {
+                    var tPos = sizeMoveHandle.mapToItem(Node.documentArea, sizeMoveHandle.width/2, sizeMoveHandle.height/2);
+                    Node.curLink.updateCanvas(tPos);
                 }
             }
 

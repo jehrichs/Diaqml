@@ -18,18 +18,79 @@
 
 import QtQuick 2.2
 
+import "node_handling.js" as Node
+
 Item {
-     id: root
+    id: root
 
-     property real tailX
-     property real tailY
-     property real headX
-     property real headY
+    property LinkSocket tail
+    property LinkSocket head
 
-     property item start
-     property item end
+    property bool followMouseMode: false
+    property bool acceptMouseInput: true
 
-     //Component.onCompleted: console.log("Link onCompleted", "tailX", tailX, "tailY", tailY, "headX", headX, "headY", headY)
-     //onTailXChanged: console.log("Link", "tailX", tailX)
-     //onHeadXChanged: console.log("Link", "headX", headX)
- }
+    onTailChanged: { updateCanvas() }
+    onHeadChanged: { updateCanvas() }
+
+    function updateCanvas(mouse) {
+        if(mouse)
+            Node.mouseLinkCursorArea = mouse;
+        else
+            Node.mouseLinkCursorArea = null;
+
+        canvas.requestPaint()
+    }
+
+    Canvas {
+        id: canvas
+        anchors.fill: parent
+        antialiasing: true
+        renderStrategy: Canvas.Threaded;
+
+        onPaint: {
+            var ctx = getContext("2d");
+            ctx.reset();
+            ctx.save();
+            ctx.clearRect(0,0,width, height);
+
+            //ctx.strokeStyle = node.nborderColor;
+            //ctx.lineWidth = node.nborderWidth;
+            ctx.lineWidth = 2
+            ctx.strokeStyle = "#000000"
+            ctx.lineJoin = "miter"
+            //ctx.fillStyle = node.nbgColor;
+            //ctx.globalAlpha = node.nalpha;
+
+            ctx.beginPath();
+            var tPos = tail.mapToItem(canvas, 0, 0);
+            ctx.moveTo(tPos.x+tail.width/2+tail.width/2, tPos.y+tail.height/2+tail.height/2);
+
+            if (followMouseMode) {
+                if(Node.mouseLinkCursorArea) {
+                    ctx.lineTo(Node.mouseLinkCursorArea.x, Node.mouseLinkCursorArea.y)
+                }
+                else {
+                    ctx.lineTo(linkMouseArea.mouseX, linkMouseArea.mouseY)
+                }
+            }
+            else {
+                var hPos = head.mapToItem(canvas, 0, 0);
+                //console.log("head",hPos.x,"w",head.width,"h",head.height)
+                ctx.lineTo(hPos.x+head.width/2, hPos.y+head.height/2)
+            }
+            ctx.closePath();
+
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
+
+    MouseArea {
+        id: linkMouseArea
+        enabled: acceptMouseInput
+        anchors.fill: parent
+        hoverEnabled: parent.followMouseMode
+        onPositionChanged: updateCanvas()
+    }
+}

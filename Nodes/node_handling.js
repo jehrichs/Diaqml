@@ -18,8 +18,13 @@
 
 .pragma library
 
+var window = null;
+var documentArea = null;
+
 var lastSelectedNode = null;
 var curLink = null;
+var mouseLinkCursorArea = null;
+var itemComponent = null;
 
 var lastSelectedBgColor = "white"
 var lastSelectedBorderColor = "black"
@@ -44,6 +49,40 @@ var setItemText = null;
 
 function setFlipable(item) {
     flipable = item;
+}
+
+function drawLink(socket) {
+    if(curLink) {
+        curLink.head = socket;
+        if(socket.links)
+            socket.links = [socket.links, socket];
+        else
+            socket.links = [socket];
+        console.log("push link to socket. SIze: ",socket.links.length)
+        curLink.followMouseMode = false;
+        curLink.acceptMouseInput = false;
+        curLink = null;
+    }
+    else {
+        itemComponent = Qt.createComponent("Link.qml");
+        curLink = itemComponent.createObject(documentArea, {"x": 0, "y": 0, "z":50});
+
+        if (curLink == null) {
+            // Error Handling
+            console.log("Error creating object");
+        }
+        else {
+            curLink.width = documentArea.width;
+            curLink.height = documentArea.height;
+            curLink.tail = socket;
+            if(socket.links)
+                socket.links = [socket.links, socket];
+            else
+                socket.links = [socket];
+            console.log("push link to socket. SIze: ",socket.links.length)
+            curLink.followMouseMode = true
+        }
+    }
 }
 
 function select(node) {

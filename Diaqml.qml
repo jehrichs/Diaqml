@@ -54,6 +54,8 @@ ApplicationWindow {
         anchors.fill: parent
         orientation: Qt.Horizontal
 
+        Component.onCompleted: Node.window = window;
+
         Flipable {
             id: flipable
             Layout.minimumWidth: 200
@@ -105,6 +107,8 @@ ApplicationWindow {
 
                 onClicked: { Node.select(null) }
             }
+
+            Component.onCompleted: Node.documentArea = documentArea;
         }
     }
 }
